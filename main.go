@@ -12,29 +12,12 @@ func getPlayerName() string {
 	fmt.Scan(&playerName)
 	return playerName
 }
-func getComputerMove() string {
-	var computerMove string
-	rand.Seed(time.Now().UnixNano())
-	number := rand.Intn(3)
-	switch number {
-	case 0:
-		computerMove = "rock"
-		fmt.Printf("The computer chose %v.", computerMove)
-	case 1:
-		computerMove = "paper"
-		fmt.Printf("The computer chose %v.", computerMove)
-	default:
-		computerMove = "scissors"
-		fmt.Printf("The computer chose %v.", computerMove)
-	}
-	return computerMove
-}
 func getPlayerMove() string {
 	var playerInput, playerMove string
 	fmt.Println("Please input a move")
 	fmt.Scan(&playerInput)
+	playerInput = strings.ToLower(playerInput)
 	if playerInput != "" {
-		strings.ToLower(playerInput)
 		switch playerInput {
 		case "rock":
 			playerMove = "rock"
@@ -49,6 +32,23 @@ func getPlayerMove() string {
 		fmt.Println("Please input a move!")
 	}
 	return playerMove
+}
+func getComputerMove() string {
+	var computerMove string
+	rand.Seed(time.Now().UnixNano())
+	number := rand.Intn(3)
+	switch number {
+	case 0:
+		computerMove = "rock"
+		fmt.Println(fmt.Sprintf("The computer chose %v.", computerMove))
+	case 1:
+		computerMove = "paper"
+		fmt.Println(fmt.Sprintf("The computer chose %v.", computerMove))
+	default:
+		computerMove = "scissors"
+		fmt.Println(fmt.Sprintf("The computer chose %v.", computerMove))
+	}
+	return computerMove
 }
 func findResult(move, cMove string) string {
 	var result string
@@ -72,13 +72,12 @@ func findResult(move, cMove string) string {
 var playerW, playerL, playerD int
 
 func main() {
-	fmt.Println("Please enter your name:")
 	var name, move, cMove string
+	fmt.Println("Please enter your name:")
 	name = getPlayerName()
-	fmt.Printf("Greetings, %v.", name)
-	move = getPlayerMove()
-	cMove = getComputerMove()
+	fmt.Println(fmt.Sprintf("Greetings, %v.", name))
+	move, cMove = getPlayerMove(), getComputerMove()
 	fmt.Println(findResult(move, cMove))
-	fmt.Printf("Current score for %v is:", name)
-	fmt.Printf("Wins: %d -- Draws %d -- Losses: %d", playerW, playerD, playerL)
+	fmt.Println(fmt.Sprintf("Current score for %v is:", name))
+	fmt.Println(fmt.Sprintf("Wins: %d -- Draws %d -- Losses: %d", playerW, playerD, playerL))
 }
