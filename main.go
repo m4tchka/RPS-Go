@@ -1,4 +1,5 @@
 package main
+
 import (
 	"fmt"
 	"math/rand"
@@ -49,14 +50,26 @@ func getPlayerMove() string {
 	}
 	return playerMove
 }
-func findResult(move, cMove) string {
-	var 
-	if move!=cMove {
-
+func findResult(move, cMove string) string {
+	var result string
+	if move != cMove {
+		if (move == "rock" && cMove == "scissors") ||
+			(move == "paper" && cMove == "rock") ||
+			(move == "scissors" && cMove == "paper") {
+			result = "Player wins!"
+			playerW++
+		} else {
+			result = "Computer wins!"
+			playerL++
+		}
 	} else {
-
+		result = "Draw"
+		playerD++
 	}
+	return result
 }
+
+var playerW, playerL, playerD int
 
 func main() {
 	fmt.Println("Please enter your name:")
@@ -65,5 +78,7 @@ func main() {
 	fmt.Printf("Greetings, %v.", name)
 	move = getPlayerMove()
 	cMove = getComputerMove()
-	findResult(move,cMove)
+	fmt.Println(findResult(move, cMove))
+	fmt.Printf("Current score for %v is:", name)
+	fmt.Printf("Wins: %d -- Draws %d -- Losses: %d", playerW, playerD, playerL)
 }
