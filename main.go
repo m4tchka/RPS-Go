@@ -9,12 +9,13 @@ import (
 
 func getPlayerName() string {
 	var playerName string
+	fmt.Print("Please enter your name: ")
 	fmt.Scan(&playerName)
 	return playerName
 }
 func getPlayerMove() string {
 	var playerInput, playerMove string
-	fmt.Println("Please input a move")
+	fmt.Print("Please input a move: ")
 	fmt.Scan(&playerInput)
 	playerInput = strings.ToLower(playerInput)
 	if playerInput != "" {
@@ -25,11 +26,11 @@ func getPlayerMove() string {
 			playerMove = "paper"
 		case "scissors":
 			playerMove = "scissors"
+		case "stop":
+			playerMove = "stop"
 		default:
 			fmt.Println("Invalid move!")
 		}
-	} else {
-		fmt.Println("Please input a move!")
 	}
 	return playerMove
 }
@@ -40,13 +41,13 @@ func getComputerMove() string {
 	switch number {
 	case 0:
 		computerMove = "rock"
-		fmt.Println(fmt.Sprintf("The computer chose %v.", computerMove))
+		fmt.Printf("The computer chose %v. \n", computerMove)
 	case 1:
 		computerMove = "paper"
-		fmt.Println(fmt.Sprintf("The computer chose %v.", computerMove))
-	default:
+		fmt.Printf("The computer chose %v. \n", computerMove)
+	case 2:
 		computerMove = "scissors"
-		fmt.Println(fmt.Sprintf("The computer chose %v.", computerMove))
+		fmt.Printf("The computer chose %v. \n", computerMove)
 	}
 	return computerMove
 }
@@ -73,11 +74,15 @@ var playerW, playerL, playerD int
 
 func main() {
 	var name, move, cMove string
-	fmt.Println("Please enter your name:")
 	name = getPlayerName()
-	fmt.Println(fmt.Sprintf("Greetings, %v.", name))
-	move, cMove = getPlayerMove(), getComputerMove()
-	fmt.Println(findResult(move, cMove))
-	fmt.Println(fmt.Sprintf("Current score for %v is:", name))
-	fmt.Println(fmt.Sprintf("Wins: %d -- Draws %d -- Losses: %d", playerW, playerD, playerL))
+	fmt.Printf("Greetings, %v. \n", name)
+	for move != "stop" {
+		move, cMove = getPlayerMove(), getComputerMove()
+		fmt.Println(findResult(move, cMove))
+		fmt.Printf("Current score for %v is: Wins: %d -- Draws %d -- Losses: %d \n", name, playerW, playerD, playerL)
+	}
+	if move == "stop" {
+		fmt.Printf("Have a good day, %v!", name)
+	}
+
 }
