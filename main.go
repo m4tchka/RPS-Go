@@ -9,15 +9,23 @@ import (
 
 func getPlayerName() string {
 	var playerName string
-	fmt.Print("Please enter your name: ")
+	//Declare a variable called playerName, that takes a string as value, but don't assign a value yet.
+	fmt.Println("Please enter your name: ")
+	//Print the string above to console
 	fmt.Scan(&playerName)
+	//Takes whatever the user types into the console and presses enter on, and assigns it as the value associated with the address of the variable, playerName.
 	return playerName
+	//Return the variable
 }
 func getPlayerMove() string {
 	var playerInput, playerMove string
-	fmt.Print("Please input a move: ")
+	//Declare 2 string variables
+	fmt.Print("Please input a move, or type stop to end the game: ")
+	//Print the string above to console
 	fmt.Scan(&playerInput)
+	//Takes the user's input and (effectively) assigns it to variable playerInput
 	playerInput = strings.ToLower(playerInput)
+	//Lowercase the variable playerInput
 	if playerInput != "" {
 		switch playerInput {
 		case "rock":
@@ -53,19 +61,24 @@ func getComputerMove() string {
 }
 func findResult(move, cMove string) string {
 	var result string
-	if move != cMove {
-		if (move == "rock" && cMove == "scissors") ||
-			(move == "paper" && cMove == "rock") ||
-			(move == "scissors" && cMove == "paper") {
-			result = "Player wins!"
-			playerW++
-		} else {
-			result = "Computer wins!"
-			playerL++
-		}
-	} else {
+	if move == "stop" {
+		result = "Stopping..."
+	} else if move == cMove {
 		result = "Draw"
 		playerD++
+	} else if (move == "rock" && cMove == "scissors") ||
+		(move == "paper" && cMove == "rock") ||
+		(move == "scissors" && cMove == "paper") {
+		result = "Player wins!"
+		playerW++
+	} else if (move == "rock" && cMove == "paper") ||
+		(move == "paper" && cMove == "scissors") ||
+		(move == "scissors" && cMove == "rock") {
+		result = "Computer wins!"
+		playerL++
+	} else {
+		fmt.Println("Please input a valid move: rock, paper or scissors,")
+		fmt.Println("or type 'stop' to exit the game !")
 	}
 	return result
 }
@@ -86,3 +99,9 @@ func main() {
 	}
 
 }
+
+// random string input
+// if move = stop, stop
+// if move = cmove, draw
+// if move = r/p/s & cmove = s/r/p, win/lose (and v,v)
+// else reprompt
